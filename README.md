@@ -59,3 +59,10 @@ src/sysst8_fsm.c
 
 - Link against the compiled library if you built it as a shared or static library.
 - When including in your project, ensure that the include paths are set correctly to find the `lib-sysst8/inc` directory.
+
+## Caution
+
+- The library is designed for embedded systems and may require modifications to work in different environments.
+- Make sure to review the platform-specific functions and adapt them as necessary for your target platform.
+- The library is provided as-is, not a place to write application code. It is a utility library for managing system state and fault conditions. If you need to write application code, please create a separate project and include this library as a dependency.
+- Must be careful with the use of global variables and ensure thread safety if used in a multi-threaded environment.
