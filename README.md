@@ -1,10 +1,10 @@
 # lib-sysst8
 
-Lib-sysst8 (lib68) is a lightweight C library for managing system state machine and fault conditions in embedded systems. It provides a structured approach to handle errors, log messages, and perform actions based on the severity of the fault.
+Lib-sysst8 (lib68) is a lightweight C library for managing system state machine (FSM) and fault conditions (FCR) in embedded systems. It provides a structured approach to handle errors, log messages, and perform actions based on the severity of the fault.
 
 ## Features
 
-- Fault Condition Reporting (FCR) system with severity levels and actions
+- Fatal Code Return (FCR) system with severity levels and actions
 - Finite State Machine (FSM) support with function pointers for state handling
 - Configurable message types and user-defined signals
 - Support for different platforms (e.g., Linux, embedded systems) with blank stubs for specific platform functions
@@ -63,6 +63,6 @@ src/sysst8_fsm.c
 ## Caution
 
 - The library is designed for embedded systems and may require modifications to work in different environments.
-- Make sure to review the platform-specific functions and adapt them as necessary for your target platform.
+- Make sure to review the platform-specific functions and adapt them as necessary for your target platform before build into a shared or static library.
 - The library is provided as-is, not a place to write application code. It is a utility library for managing system state and fault conditions. If you need to write application code, please create a separate project and include this library as a dependency.
 - Must be careful with the use of global variables and ensure thread safety if used in a multi-threaded environment.
