@@ -24,7 +24,7 @@ void sysst8_fsm_go_next(sysst8_fsm_t* me, state_handler target) {
   // Gửi tín hiệu EXIT đến trạng thái hiện tại trước khi chuyển đổi
   if (me->state) {
     sysst8_msg_t exit_msg = SYSST8_FSM_SIG_EXIT; // Giả định có hàm tạo msg chuẩn
-    me->state(&exit_msg);
+    me->state(exit_msg);
   }
 
   // Lưu trạng thái hiện tại vào lịch sử trước khi chuyển đổi
@@ -42,7 +42,7 @@ void sysst8_fsm_go_next(sysst8_fsm_t* me, state_handler target) {
   sysst8_msg_t entry_msg = SYSST8_FSM_SIG_NTRY; // Giả định có hàm tạo msg chuẩn
 
   // Gửi tín hiệu ENTRY đến trạng thái mục tiêu
-  target(&entry_msg);
+  target(entry_msg);
 
   // Thoát critical section sau khi hoàn thành việc chuyển đổi trạng thái
   sysst8_exit_critical();
@@ -86,7 +86,7 @@ void sysst8_fsm_go_back(sysst8_fsm_t* me) {
 
   // Gửi tín hiệu EXIT đến trạng thái hiện tại trước khi quay lại
   sysst8_msg_t exit_msg = SYSST8_FSM_SIG_EXIT; // Giả định có hàm tạo msg chuẩn
-  me->state(&exit_msg);
+  me->state(exit_msg);
 
   // Cập nhật trạng thái hiện tại của FSM thành trạng thái trước đó
   me->state = previous_state;
@@ -97,7 +97,7 @@ void sysst8_fsm_go_back(sysst8_fsm_t* me) {
   sysst8_msg_t entry_msg = SYSST8_FSM_SIG_NTRY; // Giả định có hàm tạo msg chuẩn
 
   // Gửi tín hiệu ENTRY đến trạng thái trước đó
-  previous_state(&entry_msg);
+  previous_state(entry_msg);
 
   // Thoát critical section sau khi hoàn thành việc quay lại trạng thái
   sysst8_exit_critical();
@@ -116,7 +116,7 @@ void sysst8_fsm_stay(sysst8_fsm_t* me) {
 
   // Gửi tín hiệu STAY đến trạng thái hiện tại để thông báo rằng FSM sẽ giữ nguyên trạng thái
   sysst8_msg_t stay_msg = SYSST8_FSM_SIG_STAY; // Giả định có hàm tạo msg chuẩn
-  me->state(&stay_msg);
+  me->state(stay_msg);
 
   // Thoát critical section sau khi hoàn thành việc giữ nguyên trạng thái
   sysst8_exit_critical();
