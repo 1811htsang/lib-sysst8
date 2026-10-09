@@ -11,6 +11,7 @@
 
 	// ANCHOR - Khai báo thư viện sử dụng
 	#include <stdint.h>
+	#include <string.h>
 	#include "sysst8_conf.h"
 	#include "sysst8_fcr.h"
 
@@ -25,7 +26,7 @@
 	 * 				cho phép hàm xử lý trạng thái truy cập và xử lý thông tin từ tin nhắn đó 
 	 * 				để thực hiện các hành động tương ứng dựa trên nội dung của tin nhắn và trạng thái hiện tại của FSM.
 	 */
-	typedef void (*state_handler)(sysst8_msg_t* msg);
+	typedef void (*state_handler)(sysst8_msg_t msg);
 
 	/** ANCHOR - Định nghĩa cấu trúc để quản lý thông tin của FSM trong hệ thống SYSST8
 	 * @attention `history` không được khai báo vượt quá SYSST8_FSM_HIS_MAX 
@@ -50,8 +51,8 @@
 		(me)->history_index = 0; \
 		(me)->history_count = 0; \
 		memset((me)->history, 0, sizeof((me)->history)); \
-		sysst8_msg_t* m = sysst8_msg_alloc(0, SYSST8_FSM_SIG_INIT, 0); \
-		if (m != NULL) { \
+		sysst8_msg_t m = SYSST8_FSM_SIG_INIT; \
+		if (m != 0u) { \
 			(init_func)(m); /* Gửi tín hiệu INIT đến trạng thái khởi tạo của FSM */ \
 		} \
 	} while(0)
@@ -62,7 +63,7 @@
 	 * @param msg chỉ con trỏ đến tin nhắn được gửi đến FSM
 	 * @note Hàm này được dùng để điều phối các tin nhắn đến FSM và gọi trong while loop của chương trình chính while(1) để xử lý các tin nhắn đến FSM.
 	 */
-	static inline void sysst8_fsm_dispatch(sysst8_fsm_t* me, sysst8_msg_t* msg) {
+	static inline void sysst8_fsm_dispatch(sysst8_fsm_t* me, sysst8_msg_t msg) {
 		if (me && me->state && msg) {
 			me->state(msg);
 		} else if (me && msg && !me->state) {
