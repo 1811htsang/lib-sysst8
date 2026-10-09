@@ -10,6 +10,7 @@ set(CMAKE_BUILD_TYPE Debug)
 # ANCHOR - Thu thập file nguồn chung
 file(GLOB_RECURSE SRCS 
   "src/*.c"
+  "config/*.c"
 )
 
 add_library(${PROJECT_NAME} STATIC ${SRCS})
