@@ -6,42 +6,43 @@
  * @copyright MIT License
  */
 #include <stdint.h>
+#include <stdbool.h>
 #include "sysst8_conf.h"
 #include "sysst8_fcr.h"
 #include "sysst8_fsm.h"
 
 void sysst8_fsm_go_next(sysst8_fsm_t* me, state_handler target) {
-  // Bảo vệ critical section để đảm bảo tính nhất quán khi thay đổi trạng thái của FSM
+  // NOTE - Bảo vệ critical section để đảm bảo tính nhất quán khi thay đổi trạng thái của FSM
   sysst8_enter_critical();
 
-  // Kiểm tra tính hợp lệ của con trỏ FSM và trạng thái mục tiêu
-  if (!me || !target) {
+  // NOTE - Kiểm tra tính hợp lệ của con trỏ FSM và trạng thái mục tiêu
+  bool is_valid_param = (me != NULL) && (target != NULL);
+  if (!is_valid_param) {
     sysst8_exit_critical();
     SYSST8_FCR_RAISE_MSG(SYSST8_FCR_SM_NULL_HANDLER, "go_next: null fsm/target");
     return; 
   }
 
-  // Gửi tín hiệu EXIT đến trạng thái hiện tại trước khi chuyển đổi
-  if (me->state) {
-    sysst8_msg_t exit_msg = SYSST8_FSM_SIG_EXIT; // Giả định có hàm tạo msg chuẩn
+  // NOTE - Gửi tín hiệu EXIT đến trạng thái hiện tại trước khi chuyển đổi
+  bool has_current_state = (me->state != NULL);
+  if (has_current_state) {
+    sysst8_msg_t exit_msg = SYSST8_FSM_SIG_EXIT;
     me->state(exit_msg);
   }
 
-  // Lưu trạng thái hiện tại vào lịch sử trước khi chuyển đổi
+  // NOTE - Lưu trạng thái hiện tại vào lịch sử trước khi chuyển đổi
   me->history[me->history_index] = me->state; // Lưu trạng thái hiện tại vào lịch sử
   me->history_index = (me->history_index + 1) % SYSST8_FSM_HIS_MAX; // Cập nhật chỉ số lịch sử, đảm bảo không vượt quá giới hạn
-  if (me->history_count < SYSST8_FSM_HIS_MAX) {
-    me->history_count++;
-  }
+  if (me->history_count < SYSST8_FSM_HIS_MAX) me->history_count++;
   //NOTE - Sửa lỗi code gốc: Cần kiểm tra me->history_count trước khi tăng, tránh tràn số lượng lịch sử
 
-  // Cập nhật trạng thái hiện tại của FSM thành trạng thái mục tiêu
+  // NOTE - Cập nhật trạng thái hiện tại của FSM thành trạng thái mục tiêu
   me->state = target; 
 
-  // Gửi tín hiệu ENTRY đến trạng thái mục tiêu sau khi chuyển đổi
+  // NOTE - Gửi tín hiệu ENTRY đến trạng thái mục tiêu sau khi chuyển đổi
   sysst8_msg_t entry_msg = SYSST8_FSM_SIG_NTRY; // Giả định có hàm tạo msg chuẩn
 
-  // Gửi tín hiệu ENTRY đến trạng thái mục tiêu
+  // NOTE - Gửi tín hiệu ENTRY đến trạng thái mục tiêu
   target(entry_msg);
 
   // Thoát critical section sau khi hoàn thành việc chuyển đổi trạng thái
@@ -54,7 +55,8 @@ void sysst8_fsm_go_back(sysst8_fsm_t* me) {
   sysst8_enter_critical();
 
   // Kiểm tra tính hợp lệ của con trỏ FSM
-  if (!me || !me->state) {
+  bool is_valid_param = (me != NULL) && (me->state != NULL);
+  if (!is_valid_param) {
     sysst8_exit_critical();
     SYSST8_FCR_RAISE_MSG(SYSST8_FCR_SM_NULL_HANDLER, "go_back: null fsm/state");
     return;
