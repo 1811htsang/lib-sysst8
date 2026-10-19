@@ -44,6 +44,9 @@
   // State Machine (SM) - Mã lỗi liên quan đến FSM/TSM
   #define SYSST8_FCR_SM_INVALID_TRANS       SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x00) // Không tìm thấy transition hợp lệ cho tín hiệu hiện tại trong TSM
   #define SYSST8_FCR_SM_NULL_HANDLER        SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x01) // Con trỏ hàm state hiện tại của FSM là NULL
+  #define SYSST8_FCR_SM_HISTORY_OVERFLOW    SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x02) // Lịch sử trạng thái của FSM vượt quá SYSST8_FSM_HIS_MAX
+  #define SYSST8_FCR_SM_MSGQ_TRY_FULL       SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x03) // Hàng đợi tin nhắn của FSM bị đầy nhưng vẫn cố gắng enqueue thêm tin nhắn
+  #define SYSST8_FCR_SM_MSGQ_TRY_EMPTY      SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x04) // Hàng đợi tin nhắn của FSM rỗng khi dequeue nhưng vẫn cố gắng lấy tin nhắn
 
   // Fallback
   #define SYSST8_FCR_UNKNOWN                SYSST8_FCR_CODE(SYSST8_FCR_MOD_UNK, 0xFF) // Mã lỗi không tra được trong bảng (không có entry tương ứng)
