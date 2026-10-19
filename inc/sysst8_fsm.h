@@ -52,24 +52,9 @@
 		(me)->history_count = 0; \
 		memset((me)->history, 0, sizeof((me)->history)); \
 		sysst8_msg_t m = SYSST8_FSM_SIG_INIT; \
-		if (m != 0u) { \
-			(init_func)(m); /* Gửi tín hiệu INIT đến trạng thái khởi tạo của FSM */ \
-		} \
+		(init_func)(m); /* Gửi tín hiệu INIT đến trạng thái khởi tạo của FSM */ \
 	} while(0)
 	//NOTE - Add free m after use to avoid memory leak
-
-	/** ANCHOR - Khai báo hàm để xử lý tin nhắn và điều hướng trạng thái trong FSM
-	 * @param me chỉ trạng thái hiện tại của FSM
-	 * @param msg chỉ con trỏ đến tin nhắn được gửi đến FSM
-	 * @note Hàm này được dùng để điều phối các tin nhắn đến FSM và gọi trong while loop của chương trình chính while(1) để xử lý các tin nhắn đến FSM.
-	 */
-	static inline void sysst8_fsm_dispatch(sysst8_fsm_t* me, sysst8_msg_t msg) {
-		if (me && me->state && msg) {
-			me->state(msg);
-		} else if (me && msg && !me->state) {
-			SYSST8_FCR_RAISE(SYSST8_FCR_SM_NULL_HANDLER); // FSM chưa được sysst8_fsm_init() hoặc bị go_next(NULL)
-		}
-	}
 
 	/** ANCHOR - Hàm để chuyển đổi trạng thái của FSM
 	 * @param me chỉ trạng thái hiện tại của FSM
@@ -86,5 +71,20 @@
 	 * @param me chỉ trạng thái hiện tại của FSM
 	 */
 	void sysst8_fsm_stay(sysst8_fsm_t* me);
+
+	/** ANCHOR - Khai báo hàm để xử lý tin nhắn và điều hướng trạng thái trong FSM
+	 * @param me chỉ trạng thái hiện tại của FSM
+	 * @param msg chỉ con trỏ đến tin nhắn được gửi đến FSM
+	 * @note Hàm này được dùng để điều phối các tin nhắn đến FSM và gọi trong while loop của chương trình chính while(1) để xử lý các tin nhắn đến FSM.
+	 */
+	static inline void sysst8_fsm_dispatch(sysst8_fsm_t* me, sysst8_msg_t msg) {
+		bool is_valid_msg = (msg >= SYSST8_FSM_SIG_INIT && msg <= SYSST8_FSM_SIG_MAX);
+		bool is_valid_fsm = (me != NULL && me->state != NULL);
+		if (is_valid_fsm && is_valid_msg) {
+			me->state(msg);
+		} else if (!is_valid_fsm || !is_valid_msg) {
+			SYSST8_FCR_RAISE(SYSST8_FCR_SM_NULL_HANDLER); // FSM chưa được sysst8_fsm_init() hoặc bị go_next(NULL)
+		}
+	}
 
 #endif //__SYSST8_FSM_H__
