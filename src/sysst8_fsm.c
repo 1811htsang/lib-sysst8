@@ -113,9 +113,8 @@ void sysst8_fsm_stay(sysst8_fsm_t* me) {
     return;
   }
 
-  // Gửi tín hiệu STAY đến trạng thái hiện tại để thông báo rằng FSM sẽ giữ nguyên trạng thái
-  sysst8_msg_t stay_msg = SYSST8_FSM_SIG_STAY; // Giả định có hàm tạo msg chuẩn
-  me->state(stay_msg);
+  // Gửi tín hiệu STAY đến trạng thái hiện tại thông qua hàng đợi
+  internal_fsm_enqueue(SYSST8_FSM_SIG_STAY);
 
   // Thoát critical section sau khi hoàn thành việc giữ nguyên trạng thái
   sysst8_exit_critical();
