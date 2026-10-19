@@ -20,12 +20,10 @@
    */
   typedef enum sysst8_msg_t {
     SYSST8_FSM_SIG_INIT = 0x20u,
-    SYSST8_FSM_SIG_NEXT = 0x21u,
-    SYSST8_FSM_SIG_BACK = 0x22u,
-    SYSST8_FSM_SIG_STAY = 0x23u,
-    SYSST8_FSM_SIG_EXIT = 0x24u,
-    SYSST8_FSM_SIG_NTRY = 0x25u,
-    SYSST8_FSM_SIG_USER = 0x26u, // Mã tin nhắn do người dùng tự định nghĩa và sửa đổi
+    SYSST8_FSM_SIG_STAY = 0x21u,
+    SYSST8_FSM_SIG_EXIT = 0x22u,
+    SYSST8_FSM_SIG_NTRY = 0x23u,
+    SYSST8_FSM_SIG_USER = 0x24u, // Mã tin nhắn do người dùng tự định nghĩa và sửa đổi
   } sysst8_msg_t;
 
   /** ANCHOR - Khai báo prototype các hàm cần triển khai để SYSST8 hoạt động
