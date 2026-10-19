@@ -47,10 +47,7 @@
 	// ANCHOR - Khởi tạo FSM và thực hiện hành động INIT đầu tiên
 	#define sysst8_fsm_init(me, init_func) \
 	do { \
-		(me)->state = (state_handler)(init_func); \
-		(me)->history_index = 0; \
-		(me)->history_count = 0; \
-		memset((me)->history, 0, sizeof((me)->history)); \
+		memset(me, 0, sizeof(me)); \
 		sysst8_msg_t m = SYSST8_FSM_SIG_INIT; \
 		(init_func)(m); /* Gửi tín hiệu INIT đến trạng thái khởi tạo của FSM */ \
 	} while(0)
