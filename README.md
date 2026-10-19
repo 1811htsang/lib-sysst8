@@ -10,6 +10,8 @@ Lib-sysst8 (lib68) is a lightweight C library for managing system state machine 
 - Support for different platforms (e.g., Linux, embedded systems) with blank stubs for specific platform functions
 - Easy integration into existing C projects
 
+Please refer to the [documentation](/document.md) for detailed information on how to use the library.
+
 ## Getting Started
 
 ### Prerequisites
