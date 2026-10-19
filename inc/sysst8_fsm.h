@@ -51,7 +51,7 @@
 		sysst8_msg_t m = SYSST8_FSM_SIG_INIT; \
 		(init_func)(m); /* Gửi tín hiệu INIT đến trạng thái khởi tạo của FSM */ \
 	} while(0)
-	//NOTE - Add free m after use to avoid memory leak
+	//NOTE - Due to m become a integer, no need to use &m, just use m directly in the function call
 
 	/** ANCHOR - Hàm để chuyển đổi trạng thái của FSM
 	 * @param me chỉ trạng thái hiện tại của FSM
