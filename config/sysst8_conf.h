@@ -12,6 +12,9 @@
   // ANCHOR - Khai báo số lượng tín hiệu tối đa
   #define SYSST8_FSM_SIG_MAX (0x2Fu)
 
+  // ANCHOR - Khai báo số lượng tin nhắn tối đa trong hàng đợi (queue) của FSM
+  #define SYSST8_FSM_MSG_Q_MAX (8u)
+
   /** ANCHOR - Khai báo kiểu dữ liệu để quản lý tin nhắn trong hệ thống SYSST8
    * @attention Người dùng tự định nghĩa các mã tin nhắn (message IDs) trong phạm vi 0x20 -> 0x2F,
    * 						để tránh xung đột với các mã tin nhắn nội bộ của SYSST8 (0x10 -> 0x1F).
@@ -22,8 +25,7 @@
     SYSST8_FSM_SIG_INIT = 0x20u,
     SYSST8_FSM_SIG_STAY = 0x21u,
     SYSST8_FSM_SIG_EXIT = 0x22u,
-    SYSST8_FSM_SIG_NTRY = 0x23u,
-    SYSST8_FSM_SIG_USER = 0x24u, // Mã tin nhắn do người dùng tự định nghĩa và sửa đổi
+    SYSST8_FSM_SIG_NTRY = 0x23u
   } sysst8_msg_t;
 
   /** ANCHOR - Khai báo prototype các hàm cần triển khai để SYSST8 hoạt động
