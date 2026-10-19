@@ -9,6 +9,9 @@
   // ANCHOR - Số lượng trạng thái tối đa trong lịch sử của FSM
 	#define SYSST8_FSM_HIS_MAX (4u)
 
+  // ANCHOR - Khai báo số lượng tín hiệu tối đa
+  #define SYSST8_FSM_SIG_MAX (0x2Fu)
+
   /** ANCHOR - Khai báo kiểu dữ liệu để quản lý tin nhắn trong hệ thống SYSST8
    * @attention Người dùng tự định nghĩa các mã tin nhắn (message IDs) trong phạm vi 0x20 -> 0x2F,
    * 						để tránh xung đột với các mã tin nhắn nội bộ của SYSST8 (0x10 -> 0x1F).
