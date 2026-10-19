@@ -74,14 +74,6 @@
 	 * @param msg chỉ con trỏ đến tin nhắn được gửi đến FSM
 	 * @note Hàm này được dùng để điều phối các tin nhắn đến FSM và gọi trong while loop của chương trình chính while(1) để xử lý các tin nhắn đến FSM.
 	 */
-	static inline void sysst8_fsm_dispatch(sysst8_fsm_t* me, sysst8_msg_t msg) {
-		bool is_valid_msg = (msg >= SYSST8_FSM_SIG_INIT && msg <= SYSST8_FSM_SIG_MAX);
-		bool is_valid_fsm = (me != NULL && me->state != NULL);
-		if (is_valid_fsm && is_valid_msg) {
-			me->state(msg);
-		} else if (!is_valid_fsm || !is_valid_msg) {
-			SYSST8_FCR_RAISE(SYSST8_FCR_SM_NULL_HANDLER); // FSM chưa được sysst8_fsm_init() hoặc bị go_next(NULL)
-		}
-	}
+	void sysst8_fsm_dispatch(sysst8_fsm_t* me);
 
 #endif //__SYSST8_FSM_H__
