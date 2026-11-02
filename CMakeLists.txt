@@ -5,7 +5,9 @@ project(sysst8 C)
 
 # ANCHOR - Bật xuất compile_commands.json cho VS Code IntelliSense
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_BUILD_TYPE Debug)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 # ANCHOR - Thu thập file nguồn chung
 file(GLOB_RECURSE SRCS 
