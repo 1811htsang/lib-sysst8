@@ -10,6 +10,7 @@
   #define __SYSST8_FCR_H__
 
   // ANCHOR - Khai báo thư viện sử dụng
+  #include <stddef.h>
   #include <stdint.h>
 
   /** ANCHOR - Định nghĩa kiểu dữ liệu cho mã lỗi FCR
@@ -47,8 +48,6 @@
   #define SYSST8_FCR_SM_NULL_HANDLER        SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x01) // Con trỏ hàm state hiện tại của FSM là NULL
   #define SYSST8_FCR_SM_HISTORY_OVERFLOW    SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x02) // Lịch sử trạng thái của FSM vượt quá SYSST8_FSM_HIS_MAX
   #define SYSST8_FCR_SM_MSGQ_TRY_FULL       SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x03) // Hàng đợi tin nhắn của FSM bị đầy nhưng vẫn cố gắng enqueue thêm tin nhắn
-  #define SYSST8_FCR_SM_MSGQ_TRY_EMPTY      SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x04) // Hàng đợi tin nhắn của FSM rỗng khi dequeue nhưng vẫn cố gắng lấy tin nhắn
-
   // Timer (TIM) - Mã lỗi liên quan đến sysst8_tim
   #define SYSST8_FCR_TIM_NULL_PARAM         SYSST8_FCR_CODE(SYSST8_FCR_MOD_TIM, 0x00) // Con trỏ timer hoặc callback là NULL
   #define SYSST8_FCR_TIM_INVALID_PERIOD     SYSST8_FCR_CODE(SYSST8_FCR_MOD_TIM, 0x01) // Chu kỳ timer bằng 0
@@ -117,7 +116,7 @@
   void sysst8_fcr_raise(sysst8_fcr_code_t code, const char* file, uint32_t line, const char* extra_msg);
 
   // ANCHOR - Macro tiện lợi để gọi sysst8_fcr_raise() với thông tin file/line tự động điền
-  #define SYSST8_FCR_RAISE(code) sysst8_fcr_raise((code), __FILE__, __LINE__, '\0')
+  #define SYSST8_FCR_RAISE(code) sysst8_fcr_raise((code), __FILE__, __LINE__, NULL)
   #define SYSST8_FCR_RAISE_MSG(code, extra) sysst8_fcr_raise((code), __FILE__, __LINE__, (extra))
 
 #endif // __SYSST8_FCR_H__
