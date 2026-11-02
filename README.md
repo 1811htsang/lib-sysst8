@@ -50,6 +50,7 @@ make -C build
 #include "sysst8_conf.h"
 #include "sysst8_fcr.h"
 #include "sysst8_fsm.h"
+#include "sysst8_tim.h"
 ```
 
 - Add the source files to your build system:
@@ -57,6 +58,7 @@ make -C build
 ```c
 src/sysst8_fcr.c
 src/sysst8_fsm.c
+src/sysst8_tim.c
 ```
 
 - Link against the compiled library if you built it as a shared or static library.
