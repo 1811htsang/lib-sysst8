@@ -27,6 +27,7 @@
   #define SYSST8_FCR_MOD_SM       (0x30u) // Module máy trạng thái (sysst8_fsm / sysst8_tsm)
   #define SYSST8_FCR_MOD_APP      (0x31u) // Dành riêng cho tầng ứng dụng tự khai báo mã lỗi
   #define SYSST8_FCR_MOD_UNK      (0x32u) // Module không xác định / fallback
+  #define SYSST8_FCR_MOD_TIM      (0x33u) // Module timer phần cứng (sysst8_tim)
 
   /** ANCHOR - Macro tiện lợi để ghép mã MODULE và SUB-CODE thành 1 sysst8_fcr_code_t
    * @param mod Mã module, xem các hằng số SYSST8_FCR_MOD_*
@@ -47,6 +48,10 @@
   #define SYSST8_FCR_SM_HISTORY_OVERFLOW    SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x02) // Lịch sử trạng thái của FSM vượt quá SYSST8_FSM_HIS_MAX
   #define SYSST8_FCR_SM_MSGQ_TRY_FULL       SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x03) // Hàng đợi tin nhắn của FSM bị đầy nhưng vẫn cố gắng enqueue thêm tin nhắn
   #define SYSST8_FCR_SM_MSGQ_TRY_EMPTY      SYSST8_FCR_CODE(SYSST8_FCR_MOD_SM, 0x04) // Hàng đợi tin nhắn của FSM rỗng khi dequeue nhưng vẫn cố gắng lấy tin nhắn
+
+  // Timer (TIM) - Mã lỗi liên quan đến sysst8_tim
+  #define SYSST8_FCR_TIM_NULL_PARAM         SYSST8_FCR_CODE(SYSST8_FCR_MOD_TIM, 0x00) // Con trỏ timer hoặc callback là NULL
+  #define SYSST8_FCR_TIM_INVALID_PERIOD     SYSST8_FCR_CODE(SYSST8_FCR_MOD_TIM, 0x01) // Chu kỳ timer bằng 0
 
   // Fallback
   #define SYSST8_FCR_UNKNOWN                SYSST8_FCR_CODE(SYSST8_FCR_MOD_UNK, 0xFF) // Mã lỗi không tra được trong bảng (không có entry tương ứng)

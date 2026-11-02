@@ -22,6 +22,10 @@ static const sysst8_fcr_entry_t g_fcr_table[] = {
   { SYSST8_FCR_SM_INVALID_TRANS, "SM invalid transition", SYSST8_FCR_SEV_ERROR, SYSST8_FCR_ACT_LOG_ONLY },
   { SYSST8_FCR_SM_NULL_HANDLER, "SM null state handler", SYSST8_FCR_SEV_FATAL, SYSST8_FCR_ACT_SYS_PANIC },
 
+  // [TIM] (sysst8_tim)
+  { SYSST8_FCR_TIM_NULL_PARAM, "TIM null param", SYSST8_FCR_SEV_FATAL, SYSST8_FCR_ACT_SYS_PANIC },
+  { SYSST8_FCR_TIM_INVALID_PERIOD, "TIM invalid period", SYSST8_FCR_SEV_ERROR, SYSST8_FCR_ACT_LOG_ONLY },
+
   // Fallback - LUÔN đặt cuối cùng
   { SYSST8_FCR_UNKNOWN, "Unknown FCR code", SYSST8_FCR_SEV_FATAL, SYSST8_FCR_ACT_SYS_PANIC }
 };
