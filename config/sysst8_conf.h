@@ -5,6 +5,7 @@
    * @attention Người dùng bổ sung BSP ở đây để triển khai các hàm bên dưới
    */
 	#include <stdint.h>
+  #include <stdbool.h>
 
   // ANCHOR - Số lượng trạng thái tối đa trong lịch sử của FSM
 	#define SYSST8_FSM_HIS_MAX (4u)
@@ -36,5 +37,15 @@
   void sysst8_log(const char* msg);
   void sysst8_reset(void);
   void sysst8_fatal(const char* file, uint32_t line, const char* msg);
+
+  /** ANCHOR - Prototype BSP cho timer phần cứng, dùng bởi sysst8_tim
+   * @attention Người dùng ánh xạ `hw_ch` sang ngoại vi timer thực tế và cấu hình ngắt,
+   *            khi hết hạn cần gọi sysst8_tim_irq() tương ứng với kênh đó.
+   * @param hw_ch chỉ số kênh timer phần cứng
+   * @param period_us chu kỳ tính theo micro giây
+   * @param periodic true nếu lặp lại liên tục, false nếu chỉ hết hạn một lần
+   */
+  void sysst8_tim_hw_start(uint8_t hw_ch, uint32_t period_us, bool periodic);
+  void sysst8_tim_hw_stop(uint8_t hw_ch);
 
 #endif // __SYSST8_CONFIG_H__
