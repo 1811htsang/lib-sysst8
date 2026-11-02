@@ -42,12 +42,16 @@
 		state_handler history[SYSST8_FSM_HIS_MAX];
 		uint8_t history_index;
 		uint8_t history_count;
+		sysst8_msg_t msg_q[SYSST8_FSM_MSG_Q_MAX];
+		uint8_t msg_q_head;
+		uint8_t msg_q_tail;
+		uint8_t msg_q_count;
 	} sysst8_fsm_t;
 
 	// ANCHOR - Khởi tạo FSM và thực hiện hành động INIT đầu tiên
 	#define sysst8_fsm_init(me, init_func) \
 	do { \
-		memset(me, 0, sizeof(me)); \
+		memset(me, 0, sizeof(*(me))); \
 		sysst8_msg_t m = SYSST8_FSM_SIG_INIT; \
 		(init_func)(m); /* Gửi tín hiệu INIT đến trạng thái khởi tạo của FSM */ \
 	} while(0)
